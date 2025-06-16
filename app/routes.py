@@ -6,6 +6,10 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
+@main.route('/today')
+def today():
+    return render_template('today.html')
+
 '''
 @main.route('/about')
 def about():
