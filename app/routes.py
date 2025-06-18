@@ -22,9 +22,9 @@ def pending_future():
 def completed_open():
     return render_template('completed_open.html')
 
-@main.route('/completed_closed')
-def completed_closed():
-    return render_template('completed_closed.html')
+@main.route('/completed_close')
+def completed_close():
+    return render_template('completed_close.html')
 
 
 @main.route('/reminder')
