@@ -28,30 +28,34 @@
     <div class="tab-pane fade show active" id="pending" role="tabpanel">
       <div class="row g-3">
         <div class="col-md-4">
-          <div class="card text-bg-primary h-100">
-            <a href="/today" style="text-decoration: none; color: inherit;">
+          <a href="/pending_today" style="text-decoration: none; color: inherit;">
+            <div class="card text-bg-primary h-100">
               <div class="card-body">
                 <h5 class="card-title">Today</h5>
                 <p class="card-text">All tickets scheduled for today.</p>
               </div>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
         <div class="col-md-4">
-          <div class="card text-bg-warning h-100">
-            <div class="card-body">
-              <h5 class="card-title">Tomorrow</h5>
-              <p class="card-text">Upcoming tasks for tomorrow.</p>
+          <a href="/pending_tomorrow" style="text-decoration: none; color: inherit;">
+            <div class="card text-bg-warning h-100">
+              <div class="card-body">
+                <h5 class="card-title">Tomorrow</h5>
+                <p class="card-text">Upcoming tasks for tomorrow.</p>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4">
-          <div class="card text-bg-info h-100">
-            <div class="card-body">
-              <h5 class="card-title">Future</h5>
-              <p class="card-text">Planned tasks beyond tomorrow.</p>
+          <a href="/pending_future" style="text-decoration: none; color: inherit;">
+            <div class="card text-bg-info h-100">
+              <div class="card-body">
+                <h5 class="card-title">Future</h5>
+                <p class="card-text">Planned tasks beyond tomorrow.</p>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -60,20 +64,24 @@
     <div class="tab-pane fade" id="completed" role="tabpanel">
       <div class="row g-3">
         <div class="col-md-6">
-          <div class="card text-bg-success h-100">
-            <div class="card-body">
-              <h5 class="card-title">Open</h5>
-              <p class="card-text">Recently completed but still open cases.</p>
+          <a href="/completed_open" style="text-decoration: none; color: inherit;">
+            <div class="card text-bg-success h-100">
+              <div class="card-body">
+                <h5 class="card-title">Open</h5>
+                <p class="card-text">Recently completed but still open cases.</p>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-6">
-          <div class="card text-bg-secondary h-100">
-            <div class="card-body">
-              <h5 class="card-title">Close</h5>
-              <p class="card-text">Closed and verified completed tickets.</p>
+          <a href="/completed_closed" style="text-decoration: none; color: inherit;">
+            <div class="card text-bg-secondary h-100">
+              <div class="card-body">
+                <h5 class="card-title">Close</h5>
+                <p class="card-text">Closed and verified completed tickets.</p>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -83,12 +91,14 @@
   <!-- Third Row: Remind -->
   <div class="row mt-4">
     <div class="col-12">
-      <div class="card border-danger text-danger text-center">
-        <div class="card-body">
-          <h5 class="card-title">Remind</h5>
-          <p class="card-text">Tickets or customers that need follow-up.</p>
+      <a href="/reminder" style="text-decoration: none; color: inherit;">
+        <div class="card border-danger text-danger text-center">
+          <div class="card-body">
+            <h5 class="card-title">Remind</h5>
+            <p class="card-text">Tickets or customers that need follow-up.</p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 

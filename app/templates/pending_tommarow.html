@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pending Tomorrow Tickets</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div class="container py-4">
+  <h2 class="mb-4 text-center">Pending Tomorrow Tickets</h2>
+  <div class="mb-3 text-end">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTicketModal">
+      <i class="fa fa-plus"></i> Add Ticket
+    </button>
+    <button class="btn btn-primary ms-2" id="exportExcelBtn"><i class="fa fa-file-excel"></i> Export Excel</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+          <th>Address</th>
+          <th>Appliance</th>
+          <th>Time</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="ticketTableBody">
+        <!-- Tickets will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Ticket Modal -->
+<div class="modal fade" id="addTicketModal" tabindex="-1" aria-labelledby="addTicketModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTicketModalLabel">Add New Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addTicketForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="number" class="form-label">Number</label>
+            <input type="tel" class="form-control" id="number" pattern="[0-9]{10}" required>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address">
+          </div>
+          <div class="mb-3">
+            <label for="appliance" class="form-label">Appliance</label>
+            <select class="form-select" id="appliance">
+              <option value="">None (not specified)</option>
+              <option>Chimney</option>
+              <option>Hob</option>
+              <option>Microwave</option>
+              <option>Oven</option>
+              <option>Dishwasher</option>
+              <option>Visit</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="time" class="form-label">Time</label>
+            <input type="time" class="form-control" id="time">
+          </div>
+          <div class="mb-3">
+            <label for="notes" class="form-label">Notes</label>
+            <textarea class="form-control" id="notes" rows="2"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Add Ticket</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+let tickets = [];
+
+function renderTickets() {
+  const tbody = document.getElementById('ticketTableBody');
+  tbody.innerHTML = '';
+  tickets.forEach((t, idx) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${t.name}</td>
+        <td>${t.number}</td>
+        <td>${t.address || ''}</td>
+        <td>${t.appliance || ''}</td>
+        <td>${t.time || ''}</td>
+        <td contenteditable='true' onblur='updateNotes(${idx}, this.innerText)'>${t.notes || ''}</td>
+      </tr>
+    `;
+  });
+}
+
+function updateNotes(idx, notes) {
+  tickets[idx].notes = notes;
+  saveTickets();
+}
+
+document.getElementById('addTicketForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const ticket = {
+    name: document.getElementById('name').value,
+    number: document.getElementById('number').value,
+    address: document.getElementById('address').value,
+    appliance: document.getElementById('appliance').value,
+    time: document.getElementById('time').value,
+    notes: document.getElementById('notes').value
+  };
+  tickets.push(ticket);
+  saveTickets();
+  renderTickets();
+  this.reset();
+  var modal = bootstrap.Modal.getInstance(document.getElementById('addTicketModal'));
+  modal.hide();
+});
+
+document.getElementById('exportExcelBtn').addEventListener('click', function() {
+  const ws = XLSX.utils.json_to_sheet(tickets);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Pending Tomorrow');
+  XLSX.writeFile(wb, 'pending_tommarow.xlsx');
+});
+
+function saveTickets() {
+  fetch('/api/pending_tommarow', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(tickets)
+  });
+}
+
+function loadTickets() {
+  fetch('/api/pending_tommarow')
+    .then(res => res.json())
+    .then(data => {
+      tickets = data;
+      renderTickets();
+    });
+}
+
+loadTickets();
+</script>
+</body>
+</html>

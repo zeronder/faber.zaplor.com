@@ -6,16 +6,27 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/today')
-def today():
-    return render_template('today.html')
+@main.route('/pending_today')
+def pending_today():
+    return render_template('pending_today.html')
 
-'''
-@main.route('/about')
-def about():
-    return render_template('about.html')
+@main.route('/pending_tomorrow')
+def pending_tomorrow():
+    return render_template('pending_tommarow.html')
 
-@main.route('/contact')
-def contact():
-    return render_template('contact.html')
-'''
+@main.route('/pending_future')
+def pending_future():
+    return render_template('pending_future.html')
+
+@main.route('/completed_open')
+def completed_open():
+    return render_template('completed_open.html')
+
+@main.route('/completed_closed')
+def completed_closed():
+    return render_template('completed_closed.html')
+
+
+@main.route('/reminder')
+def reminder():
+    return render_template('reminder.html')

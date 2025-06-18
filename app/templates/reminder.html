@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reminders</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div class="container py-4">
+  <h2 class="mb-4 text-center">Reminders</h2>
+  <div class="mb-3 text-end">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRemindModal">
+      <i class="fa fa-plus"></i> Add Reminder
+    </button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+          <th>Reason</th>
+          <th>Date</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="remindTableBody">
+        <!-- Reminders will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Reminder Modal -->
+<div class="modal fade" id="addRemindModal" tabindex="-1" aria-labelledby="addRemindModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addRemindModalLabel">Add New Reminder</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addRemindForm">
+          <div class="mb-3">
+            <label for="remindName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="remindName" required>
+          </div>
+          <div class="mb-3">
+            <label for="remindNumber" class="form-label">Number</label>
+            <input type="tel" class="form-control" id="remindNumber" pattern="[0-9]{10}" required>
+          </div>
+          <div class="mb-3">
+            <label for="remindReason" class="form-label">Reason</label>
+            <input type="text" class="form-control" id="remindReason" required>
+          </div>
+          <div class="mb-3">
+            <label for="remindDate" class="form-label">Date</label>
+            <input type="date" class="form-control" id="remindDate" required>
+          </div>
+          <div class="mb-3">
+            <label for="remindNotes" class="form-label">Notes</label>
+            <textarea class="form-control" id="remindNotes" rows="2"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Add Reminder</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let reminders = [];
+
+function renderReminders() {
+  const tbody = document.getElementById('remindTableBody');
+  tbody.innerHTML = '';
+  reminders.forEach((r, idx) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.number}</td>
+        <td>${r.reason}</td>
+        <td>${r.date}</td>
+        <td>${r.notes || ''}</td>
+      </tr>
+    `;
+  });
+}
+
+document.getElementById('addRemindForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const reminder = {
+    name: document.getElementById('remindName').value,
+    number: document.getElementById('remindNumber').value,
+    reason: document.getElementById('remindReason').value,
+    date: document.getElementById('remindDate').value,
+    notes: document.getElementById('remindNotes').value
+  };
+  reminders.push(reminder);
+  renderReminders();
+  this.reset();
+  var modal = bootstrap.Modal.getInstance(document.getElementById('addRemindModal'));
+  modal.hide();
+});
+
+renderReminders();
+</script>
+</body>
+</html>
