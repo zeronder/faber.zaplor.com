@@ -12,7 +12,7 @@ def pending_today():
 
 @main.route('/pending_tomorrow')
 def pending_tomorrow():
-    return render_template('pending_tommorow.html')
+    return render_template('pending_tomorrow.html')
 
 @main.route('/pending_future')
 def pending_future():
