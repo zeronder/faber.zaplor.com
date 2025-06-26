@@ -1,7 +1,7 @@
 // Helper to create action icons for number
 function createActionIcons(number) {
   const call = `<a href='tel:${number}' class='me-2' title='Call'><i class='fa fa-phone text-success fa-lg' style='font-size: 1.7em;'></i></a>`;
-  const wa = `<a href='https://wa.me/91${number}' target='_blank' class='me-2' title='WhatsApp'><i class='fab fa-whatsapp text-success fa-lg' style='font-size: 1.7em;'></i></a>`;
+const wa = `<a href='https://wa.me/91${number}' target='_blank' class='me-2' title='WhatsApp'><i class='fab fa-whatsapp text-success fa-lg' style='font-size: 1.7em;'></i></a>`;
   // Only two icons, horizontal
   return `<div class='d-flex flex-row justify-content-center mt-1'>${call}${wa}</div>`;
 }
