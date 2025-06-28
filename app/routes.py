@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, request, redirect, url_for
 
 main = Blueprint('main', __name__)
 import mysql.connector 
@@ -48,3 +48,22 @@ def api_pending_today():
     cursor.execute("SELECT * FROM pending_today")
     data = cursor.fetchall()
     return jsonify(data)
+
+@main.route('/add_ticket', methods=['GET', 'POST'])
+def add_ticket():
+    if request.method == 'POST':
+        name = request.form['name']
+        number = request.form['number']
+        address = request.form['address']
+        appliance = request.form['appliance']
+        time = request.form['time']
+        notes = request.form['notes']
+
+        cursor.execute("""
+            INSERT INTO pending_today (name, number, address, appliance, time, notes)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (name, number, address, appliance, time, notes))
+
+        return redirect(url_for('main.pending_today'))  # update this if your function name is different
+
+    return render_template('add_ticket.html')

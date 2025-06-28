@@ -1,0 +1,48 @@
+<!-- Add Ticket Modal -->
+<div class="modal fade" id="addTicketModal" tabindex="-1" aria-labelledby="addTicketModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTicketModalLabel">Add New Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addTicketForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="number" class="form-label">Number</label>
+            <input type="tel" class="form-control" id="number" pattern="[0-9]{10}" required>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address">
+          </div>
+          <div class="mb-3">
+            <label for="appliance" class="form-label">Appliance</label>
+            <select class="form-select" id="appliance">
+              <option value="">None (not specified)</option>
+              <option>Chimney</option>
+              <option>Hob</option>
+              <option>Microwave</option>
+              <option>Oven</option>
+              <option>Dishwasher</option>
+              <option>Visit</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="time" class="form-label">Time</label>
+            <input type="time" class="form-control" id="time">
+          </div>
+          <div class="mb-3">
+            <label for="notes" class="form-label">Notes</label>
+            <textarea class="form-control" id="notes" rows="2"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Add Ticket</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
